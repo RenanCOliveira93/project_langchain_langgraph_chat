@@ -1,0 +1,11 @@
+transformers==4.43
+langchain==0.3.16
+langchain-community==0.3.16
+langchain-core==0.3.32
+langgraph==0.2.68
+openai==1.60.2
+requests==2.32.3
+torchvision==0.2.2
+fastapi==0.115.8
+pydantic==2.10.6
+langchain_huggingface==0.1.2
