@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        #chat-container {
+            width: 50%;
+            height: 400px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Chatbot</h1>
+    <div id="chat-container"></div>
+    <input type="text" id="user-input" placeholder="Digite sua mensagem...">
+    <button onclick="sendMessage()">Enviar</button>
+
+    <script>
+        function sendMessage() {
+            const userInput = document.getElementById('user-input');
+            const message = userInput.value.trim();
+            if (message === "") return; // Evita enviar mensagem vazia
+
+            userInput.value = '';  // Limpa o campo de entrada
+
+            displayMessage('Você', message);
+
+            axios.post('/chat', { message: message })
+                .then(function (response) {
+                    displayMessage('Chatbot', response.data.response);
+                })
+                .catch(function (error) {
+                    console.error('Erro:', error);
+                    displayMessage('Chatbot', 'Desculpe, ocorreu um erro.');
+                });
+        }
+
+        function displayMessage(sender, message) {
+            const chatContainer = document.getElementById('chat-container');
+            const messageElement = document.createElement('p');
+            messageElement.innerHTML = `<strong>${sender}:</strong> ${message}`;
+            chatContainer.appendChild(messageElement);
+
+            // Faz rolagem automática para a última mensagem
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+    </script>
+</body>
+</html>
